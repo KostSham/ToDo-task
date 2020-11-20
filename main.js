@@ -13,16 +13,25 @@ clearCompleted.addEventListener("click", removeCompletedTasks);
 //add tasks in list
 function addTodo(e) {
   e.preventDefault();
-
-  console.log(form.addinput.value);
   const inputValue = form.addinput.value;
   if (form.addinput.value === "") return;
   form.addinput.value = "";
 
   generateTodoTemplate(inputValue);
 }
+
+function validation(value) {
+  return String(value)
+    .replace(/&/gu, "&amp;")
+    .replace(/</gu, "&lt;")
+    .replace(/>/gu, "&gt;")
+    .replace(/"/gu, "&quot;")
+    .replace(/'/gu, "&#039;");
+}
 function generateTodoTemplate(value) {
-  const template = `<li class="task active-task"> <span class="text-content">${value} </span> <button class="btn-remove">Remove</button> </li>`;
+  const template = `<li class="task active-task"> <span class="text-content">${validation(
+    value
+  )} </span> <button class="btn-remove">Remove</button> </li>`;
   todoList.innerHTML += template;
   i++;
   total.textContent = i;
@@ -42,8 +51,6 @@ function removeAndCompleteTask(event) {
   }
   if (event.target.classList.contains("text-content")) {
     total.textContent = i;
-    console.log(event.target);
-
     event.target.closest("li").classList.toggle("complete-task");
     event.target.closest("li").classList.toggle("active-task");
     let a = document.getElementsByClassName("complete-task");
@@ -54,7 +61,6 @@ function removeAndCompleteTask(event) {
 }
 
 function filterButtons(event) {
-  // [...document.getElementsByClassName("task")]
   const arr = Array.from(todoList.children);
   if (event.target.classList.contains("all")) {
     arr.forEach((element) => {
