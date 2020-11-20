@@ -7,10 +7,10 @@ const clearCompleted = document.querySelector(".clear-checked");
 const footer = document.querySelector(".hide");
 let i = 0;
 form.addEventListener("submit", addTodo);
-todoList.addEventListener("click", removeTodo);
-todoList.addEventListener("click", completeTask);
-display.addEventListener("click", showHideElements);
+todoList.addEventListener("click", removeAndCompleteTask);
+display.addEventListener("click", filterButtons);
 clearCompleted.addEventListener("click", removeCompletedTasks);
+//add tasks in list
 function addTodo(e) {
   e.preventDefault();
 
@@ -30,18 +30,16 @@ function generateTodoTemplate(value) {
     footer.classList.add("show");
   }
 }
-function removeTodo(event) {
-  total.textContent = i;
+//"remove button" and "choose task like complete" logic
+function removeAndCompleteTask(event) {
   if (event.target.classList.contains("btn-remove")) {
     event.target.closest("li").remove();
     i--;
     total.textContent = i;
+    if (!document.getElementsByClassName("task").length) {
+      footer.classList.remove("show");
+    }
   }
-  if (!document.getElementsByClassName("task").length) {
-    footer.classList.remove("show");
-  }
-}
-function completeTask(event) {
   if (event.target.classList.contains("text-content")) {
     total.textContent = i;
     console.log(event.target);
@@ -55,25 +53,37 @@ function completeTask(event) {
   }
 }
 
-function showHideElements(event) {
+function filterButtons(event) {
+  // [...document.getElementsByClassName("task")]
+  const arr = Array.from(todoList.children);
   if (event.target.classList.contains("all")) {
-    [...document.getElementsByClassName("task")].forEach((element) => {
-      element.style.display = "flex";
+    arr.forEach((element) => {
+      if (element.classList.contains("task")) {
+        element.style.display = "flex";
+      }
     });
   } else if (event.target.classList.contains("completed")) {
     // console.log(document.getElementsByClassName("task"));
-    [...document.getElementsByClassName("task")].forEach((element) => {
-      element.style.display = "none";
+    arr.forEach((element) => {
+      if (element.classList.contains("task")) {
+        element.style.display = "none";
+      }
     });
-    [...document.getElementsByClassName("complete-task")].forEach((element) => {
-      element.style.display = "flex";
+    arr.forEach((element) => {
+      if (element.classList.contains("complete-task")) {
+        element.style.display = "flex";
+      }
     });
   } else if (event.target.classList.contains("active")) {
-    [...document.getElementsByClassName("complete-task")].forEach((element) => {
-      element.style.display = "none";
+    arr.forEach((element) => {
+      if (element.classList.contains("complete-task")) {
+        element.style.display = "none";
+      }
     });
-    [...document.getElementsByClassName("active-task")].forEach((element) => {
-      element.style.display = "flex";
+    arr.forEach((element) => {
+      if (element.classList.contains("active-task")) {
+        element.style.display = "flex";
+      }
     });
   }
 }
