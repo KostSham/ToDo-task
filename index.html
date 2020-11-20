@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>ToDo</title>
+  </head>
+  <body>
+    <span class="title">todos</span>
+    <form class="form">
+      <input
+        type="input"
+        placeholder="What needs to be done?"
+        class="input"
+        id="addinput"
+      />
+    </form>
+    <ul class="todo-list"></ul>
+    <footer class="hide">
+      <div>
+        <span id="total"></span>
+        items left
+      </div>
+      <div class="display">
+        <button class="all">All</button>
+        <button class="active">Active</button>
+        <button class="completed">Completed</button>
+      </div>
+      <button class="clear-checked">Clear completed</button>
+    </footer>
+    <script src="./main.js"></script>
+  </body>
+</html>
